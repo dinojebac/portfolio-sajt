@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+:root {
+  --color-bg: #060606;
+  --color-panel: #0c0c0d;
+  --color-fg: #efeee8;
+  --color-dim: #8f8d85;
+  --color-line: rgba(239, 238, 232, 0.1);
+  /* Pale green of the panther's eyes — the only accent on the site, used sparingly. */
+  --color-eye: #c2cdab;
+}
+
+@theme inline {
+  --color-bg: var(--color-bg);
+  --color-panel: var(--color-panel);
+  --color-fg: var(--color-fg);
+  --color-dim: var(--color-dim);
+  --color-line: var(--color-line);
+  --color-eye: var(--color-eye);
+  --font-sans: var(--font-instrument-sans);
+  --font-mono: var(--font-plex-mono);
+}
+
+html {
+  background: var(--color-bg);
+}
+
+/* Lenis takes over scrolling when active */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-instrument-sans), system-ui, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Static film grain over everything — subtle, non-animated for mobile perf. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 180px 180px;
+}
+
+::selection {
+  background: var(--color-eye);
+  color: #060606;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: #232320;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3a3a35;
+}
+
+:focus-visible {
+  outline: 1px solid var(--color-eye);
+  outline-offset: 3px;
+}
+
+/* U components lejeru da bi Tailwind utility klase (utilities lejer) mogle
+   da pregaze pojedinačna svojstva bez !important. */
+@layer components {
+  /* Small technical label — mono, spaced, uppercase. */
+  .label {
+    font-family: var(--font-plex-mono), monospace;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--color-dim);
+  }
+
+  /* Outlined display type used in the showreel marquee. */
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(239, 238, 232, 0.25);
+  }
+}
+
+/* Pulsing line in the hero "Skroluj" hint. */
+@keyframes scrollhint {
+  0% {
+    transform: translateY(-100%);
+  }
+  60%,
+  100% {
+    transform: translateY(220%);
+  }
+}
+
+.hairline {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-line) 18%, var(--color-line) 82%, transparent);
+}
