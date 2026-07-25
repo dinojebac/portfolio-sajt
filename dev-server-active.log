@@ -1,0 +1,14 @@
+
+> work@0.1.0 dev
+> next dev --port 3001
+
+▲ Next.js 16.2.10 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://10.101.238.46:3001
+- Environments: .env.local
+✓ Ready in 1006ms
+
+○ Compiling / ...
+ GET / 500 in 10.6s (next.js: 10.4s, application-code: 266ms)
+ GET / 500 in 33ms (next.js: 21ms, application-code: 12ms)
+ GET / 500 in 47ms (next.js: 32ms, application-code: 14ms)
