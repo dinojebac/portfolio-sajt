@@ -22,7 +22,7 @@ const steps = [
 export default function About() {
   return (
     <section id="studio" className="px-5 py-24 md:px-10 md:py-36">
-      <SectionHead index="" label="Studio" title="Šta dobijaš kada sarađujemo?" />
+      <SectionHead index="" title="Šta dobijaš kada sarađujemo?" />
 
       <Reveal as="p" mode="lines" className="max-w-4xl text-[clamp(1.4rem,3.2vw,2.5rem)] font-medium leading-[1.25] tracking-[-0.02em]">
         Ne dobijaš samo lep sajt. Dobijaš alat koji ti dovodi nove mušterije i čini da tvoj posao izgleda ozbiljnije i skuplje nego ikad.

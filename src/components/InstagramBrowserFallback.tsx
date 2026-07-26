@@ -59,9 +59,6 @@ export default function InstagramBrowserFallback() {
         <h2 id="instagram-browser-title" className="mt-4 text-2xl font-semibold tracking-[-0.03em]">
           Otvorite u Chrome-u za pun doživljaj
         </h2>
-        <p className="mt-3 text-sm leading-relaxed text-fg/65">
-          Instagram browser ne prikazuje sajt i animacije kako treba.
-        </p>
         <a
           href={SITE_URL}
           onClick={openChrome}

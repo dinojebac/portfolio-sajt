@@ -65,7 +65,6 @@ export default function SelectedWork() {
     <section id="work" ref={ref} className="px-5 py-24 md:px-10 md:py-36">
       <SectionHead
         index=""
-        label="Selected Work"
         title="Samo neki od projekata"
       />
 

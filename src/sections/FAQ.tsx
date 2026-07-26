@@ -15,7 +15,6 @@ export default function FAQ() {
       <div className="grid gap-12 md:grid-cols-[1fr_1.4fr] md:gap-20">
         <SectionHead
           index="06"
-          label="FAQ"
           title="Pitanja koja svi postave."
           lead="Ako odgovora nema ovde — forma je ispod, odgovaramo brzo."
           className="mb-0!"

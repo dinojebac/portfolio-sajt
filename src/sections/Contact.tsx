@@ -191,7 +191,6 @@ export default function Contact() {
         <div>
           <SectionHead
             index=""
-            label="Kontakt"
             title={
               <>
                 Želiš projekat?

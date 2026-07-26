@@ -28,7 +28,6 @@ export default function ServiceChooser() {
     <section className="px-5 py-24 md:px-10 md:py-32">
       <SectionHead
         index=""
-        label="Usluge"
         title="Šta ti treba?"
         lead="Izaberi uslugu i vidi kako radimo."
       />

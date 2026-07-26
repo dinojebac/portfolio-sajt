@@ -28,7 +28,6 @@ export default function Services() {
     <section id="services" ref={ref} className="px-5 py-24 md:px-10 md:py-36">
       <SectionHead
         index="01"
-        label="Services"
         title="Ne pravimo samo sajt. Gradimo prvi utisak koji prodaje."
       />
 
