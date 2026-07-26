@@ -9,42 +9,26 @@ export type Service = {
 export const services: Service[] = [
   {
     index: "01",
-    title: "Premium sajtovi",
+    title: "Sajt koji predstavlja vrednost tvog rada",
     tag: "Design & Development",
     description:
-      "Sajt projektovan da tvoj brend izgleda kao najskuplji izbor u svojoj kategoriji — i kodiran da to potvrdi brzinom.",
+      "Ne pravimo stranice koje samo lepo izgledaju. Gradimo sajt koji odmah pokazuje ko si, šta nudiš i zašto tvoj rad vredi više od proseka u tvojoj branši.",
     meta: ["Custom dizajn", "Next.js", "Mobile-first"],
   },
   {
     index: "02",
-    title: "Cinematic scroll animacije",
-    tag: "Motion",
+    title: "Struktura koja dovodi klijente",
+    tag: "Strategy & UX",
     description:
-      "Scroll koreografija koja vodi pogled: video reveal, tekst koji ulazi u pravom trenutku i interakcije koje se osete, ne primete.",
-    meta: ["GSAP", "ScrollTrigger", "Fluid motion"],
+      "Svaka sekcija ima jasan cilj — da posetilac za par sekundi shvati šta radiš i zašto baš tebe da pozove.",
+    meta: ["Struktura", "Sadržaj", "UX pravac"],
   },
   {
     index: "03",
-    title: "Brending i digitalna prezentacija",
-    tag: "Identity",
+    title: "Animacije koje privlače klijente",
+    tag: "Motion",
     description:
-      "Logo, tipografija, boje i ton komunikacije — jedan utisak, dosledan od sajta do svake objave.",
-    meta: ["Vizuelni identitet", "Social kit", "Smernice"],
-  },
-  {
-    index: "04",
-    title: "Domen, hosting i lansiranje",
-    tag: "Setup & Launch",
-    description:
-      "Domen, hosting, poslovni mejl i analitika — tehnički deo preuzimamo u celosti. Ti dobijaš link koji radi.",
-    meta: ["Domen", "Hosting", "Analitika"],
-  },
-  {
-    index: "05",
-    title: "Koncept, struktura i UX",
-    tag: "Strategy & UX",
-    description:
-      "Pre prvog piksela: šta sajt treba da kaže, kojim redom, i kako posetioca vodi do upita.",
-    meta: ["Struktura", "Sadržaj", "UX pravac"],
+      "Dizajn koji izgleda ozbiljno, animacije koje privlače klijente i prezentacija zbog koje brend deluje skuplje od konkurencije.",
+    meta: ["GSAP", "ScrollTrigger", "Fluid motion"],
   },
 ];

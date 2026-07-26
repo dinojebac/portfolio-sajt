@@ -14,7 +14,6 @@ type CaseModalProps = {
 };
 
 export default function CaseModal({ project, onClose }: CaseModalProps) {
-  // `current` keeps the content mounted while the exit animation plays.
   const [current, setCurrent] = useState<Project | null>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -24,7 +23,6 @@ export default function CaseModal({ project, onClose }: CaseModalProps) {
     if (project) setCurrent(project);
   }, [project]);
 
-  // Scroll lock + Escape while open.
   useEffect(() => {
     if (!project) return;
     getLenis()?.stop();
@@ -85,12 +83,9 @@ export default function CaseModal({ project, onClose }: CaseModalProps) {
         data-lenis-prevent
         className="absolute inset-x-0 bottom-0 top-[5svh] overflow-y-auto rounded-t-2xl border border-line bg-panel md:inset-x-[6vw] md:bottom-[5vh] md:top-[5vh] md:rounded-2xl"
       >
-        {/* Header */}
         <div className="sticky top-0 z-10 flex items-start justify-between gap-4 border-b border-line bg-panel/90 px-5 py-5 backdrop-blur-xl md:px-10">
           <div>
-            <p className="label text-[10px]">
-              Case study
-            </p>
+            <p className="label text-[10px]">Case study</p>
             <h3 className="mt-1 text-2xl font-semibold tracking-[-0.03em] md:text-4xl">{p.title}</h3>
             <p className="mt-1 text-sm text-dim">{p.type}</p>
           </div>
@@ -104,7 +99,6 @@ export default function CaseModal({ project, onClose }: CaseModalProps) {
           </button>
         </div>
 
-        {/* Media */}
         <div className="aspect-[16/9] w-full overflow-hidden border-b border-line">
           {p.media.kind === "video" ? (
             <video
@@ -118,14 +112,12 @@ export default function CaseModal({ project, onClose }: CaseModalProps) {
               className="h-full w-full object-cover"
             />
           ) : p.media.kind === "image" ? (
-            // eslint-disable-next-line @next/next/no-img-element
             <img src={p.media.src} alt={p.media.alt} className="h-full w-full object-cover" />
           ) : (
             <MockSite project={p} />
           )}
         </div>
 
-        {/* Body */}
         <div className="px-5 py-10 md:px-10 md:py-14">
           <div className="grid gap-10 md:grid-cols-2 md:gap-14">
             <div>
@@ -133,13 +125,13 @@ export default function CaseModal({ project, onClose }: CaseModalProps) {
               <p className="text-base leading-relaxed text-fg/90 md:text-lg">{p.problem}</p>
             </div>
             <div>
-              <p className="label mb-4 text-eye">Rešenje</p>
+              <p className="label mb-4 text-eye">Resenje</p>
               <p className="text-base leading-relaxed text-fg/90 md:text-lg">{p.solution}</p>
             </div>
           </div>
 
           <div className="mt-12">
-            <p className="label mb-5">Šta je urađeno</p>
+            <p className="label mb-5">Sta je uradjeno</p>
             <ul className="flex flex-wrap gap-2.5">
               {p.built.map((item) => (
                 <li
@@ -160,9 +152,9 @@ export default function CaseModal({ project, onClose }: CaseModalProps) {
           </div>
 
           <div className="mt-14 flex flex-col items-start gap-4 border-t border-line pt-10 md:flex-row md:items-center md:justify-between">
-            <p className="text-dim">Želiš ovakav rezultat za svoj brend?</p>
+            <p className="text-dim">Zelis ovakav rezultat za svoj brend?</p>
             <Btn href="#contact" onClick={toContact}>
-              Pošalji projekat
+              Pokreni razgovor
             </Btn>
           </div>
         </div>

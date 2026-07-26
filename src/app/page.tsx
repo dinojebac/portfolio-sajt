@@ -2,10 +2,11 @@ import SmoothScroll from "@/components/SmoothScroll";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Hero from "@/sections/Hero";
+import ServiceChooser from "@/sections/ServiceChooser";
 import Services from "@/sections/Services";
+import OfferDetails from "@/sections/OfferDetails";
 import Showcase from "@/sections/Showcase";
 import SelectedWork from "@/sections/SelectedWork";
-import WhyBSB from "@/sections/WhyBSB";
 import About from "@/sections/About";
 import FAQ from "@/sections/FAQ";
 import Contact from "@/sections/Contact";
@@ -17,10 +18,11 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <Services />
         <Showcase />
+        <ServiceChooser />
+        <Services />
+        <OfferDetails />
         <SelectedWork />
-        <WhyBSB />
         <About />
         <FAQ />
         <Contact />

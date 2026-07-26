@@ -9,18 +9,13 @@ const reasons = [
   },
   {
     index: "02",
-    title: "Režija, ne dekoracija",
-    text: "Svaka animacija ima zadatak: da vodi pogled ka sledećem koraku. Ništa ne treperi bez razloga.",
+    title: "Sajt koji dovodi mušterije",
+    text: "Svaka animacija i svako dugme imaju jedan cilj: da posetilac ostavi kontakt ili te pozove.",
   },
   {
     index: "03",
-    title: "Jedan tim za sve",
-    text: "Koncept, dizajn, kod, domen, hosting. Nula prebacivanja odgovornosti između izvođača.",
-  },
-  {
-    index: "04",
-    title: "Brzina i stabilnost",
-    text: "Premium utisak ne sme da se učitava pet sekundi. Performanse su deo dizajna, ne naknadna optimizacija.",
+    title: "Gotovo brzo, bez glavobolje",
+    text: "Nema čekanja mesecima ni prepiske sa gomilom ljudi. Kažeš mi šta ti treba, ja se pobrinem za sve — dizajn, kod i kompletan UX (korisničko iskustvo).",
   },
 ];
 

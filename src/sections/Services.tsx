@@ -29,8 +29,7 @@ export default function Services() {
       <SectionHead
         index="01"
         label="Services"
-        title="Ne prodajemo sajtove. Prodajemo utisak koji ostavljaju."
-        lead="Pet stvari koje radimo — i radimo ih do kraja. Od prve skice do sajta koji je online i zarađuje."
+        title="Ne pravimo samo sajt. Gradimo prvi utisak koji prodaje."
       />
 
       <div className="border-b border-line">

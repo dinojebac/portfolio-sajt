@@ -1,59 +1,186 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import SectionHead from "@/components/SectionHead";
 import Reveal from "@/components/Reveal";
-import { site } from "@/data/site";
+import {
+  SERVICE_SELECT_EVENT,
+  type ServiceChoice,
+} from "@/lib/serviceSelection";
 
 type FormState = "idle" | "sending" | "sent" | "error";
-
-// Lucide je izbacio brend ikonice, pa Instagram glif crtamo sami.
-function InstagramIcon({ size = 16 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <rect x="2" y="2" width="20" height="20" rx="5" />
-      <circle cx="12" cy="12" r="4.5" />
-      <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
+type ChoiceOption = { value: string; label: string };
 
 const inputCls =
   "w-full border-b border-line bg-transparent py-3 text-[15px] text-fg outline-none transition-colors duration-300 placeholder:text-dim/50 focus:border-fg/60";
-const labelCls = "label text-[10px] mb-1.5 block";
+const labelCls = "label mb-1.5 block text-[10px]";
+
+const serviceOptions: ChoiceOption[] = [
+  { value: "vebsajt", label: "Vebsajt" },
+  { value: "prodavnica", label: "Online prodavnica" },
+  { value: "seo", label: "SEO optimizacija" },
+];
+
+const logoPhotoOptions: ChoiceOption[] = [
+  { value: "imam", label: "Imam, poslaću na Instagram odmah" },
+  {
+    value: "instagram",
+    label: "Na Instagramu imam sve što želim da ubacim u sajt",
+  },
+];
+
+const styleOptions: ChoiceOption[] = [
+  { value: "dark", label: "Dark (tamna tema)" },
+  { value: "light", label: "Light (svetla tema)" },
+  { value: "minimal", label: "Minimal" },
+  { value: "bold", label: "Bold/upečatljivo" },
+];
+
+const animationOptions: ChoiceOption[] = [
+  { value: "dynamic", label: "Da, želim dinamičan sajt sa animacijama" },
+  { value: "simple", label: "Ne, želim jednostavan i brz sajt" },
+  { value: "advisor", label: "Nisam siguran, prepuštam tebi" },
+];
+
+const deadlineOptions: ChoiceOption[] = [
+  { value: "two-days", label: "Želim sajt za 2 dana maks" },
+  { value: "this-week", label: "Želim sajt ove nedelje" },
+  { value: "flexible", label: "Nije mi bitno kad ćeš završiti" },
+];
+
+function ChoiceSelect({
+  id,
+  name,
+  label,
+  value,
+  options,
+  onChange,
+}: {
+  id: string;
+  name: string;
+  label: string;
+  value: string;
+  options: ChoiceOption[];
+  onChange: (value: string) => void;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const selected = options.find((option) => option.value === value);
+
+  return (
+    <div>
+      <label htmlFor={id} className={labelCls}>
+        {label} *
+      </label>
+      <input
+        id={id}
+        name={name}
+        value={value}
+        readOnly
+        tabIndex={-1}
+        className="absolute h-px w-px opacity-0"
+      />
+      <div className="relative">
+        <button
+          type="button"
+          aria-haspopup="listbox"
+          aria-expanded={isOpen}
+          onClick={() => setIsOpen((open) => !open)}
+          className={`${inputCls} flex items-center justify-between text-left`}
+        >
+          <span>{selected?.label ?? "Izaberi..."}</span>
+          <span className="text-xs text-dim" aria-hidden="true">
+            {isOpen ? "−" : "+"}
+          </span>
+        </button>
+        {isOpen && (
+          <div
+            role="listbox"
+            aria-label={label}
+            className="absolute z-20 mt-2 w-full overflow-hidden rounded-sm border border-line bg-bg shadow-2xl"
+          >
+            {options.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                role="option"
+                aria-selected={value === option.value}
+                onClick={() => {
+                  onChange(option.value);
+                  setIsOpen(false);
+                }}
+                className="block w-full px-4 py-3 text-left text-[15px] text-fg transition-colors hover:bg-eye hover:text-bg"
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default function Contact() {
   const [state, setState] = useState<FormState>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [service, setService] = useState<ServiceChoice | "">("");
+  const [logoPhotos, setLogoPhotos] = useState("");
+  const [siteStyle, setSiteStyle] = useState("");
+  const [animations, setAnimations] = useState("");
+  const [deadline, setDeadline] = useState("");
 
-  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const form = e.currentTarget;
+  useEffect(() => {
+    const onService = (event: Event) => {
+      const choice = (event as CustomEvent<ServiceChoice>).detail;
+      if (serviceOptions.some((option) => option.value === choice)) {
+        setService(choice);
+      }
+    };
+    window.addEventListener(SERVICE_SELECT_EVENT, onService);
+    return () => window.removeEventListener(SERVICE_SELECT_EVENT, onService);
+  }, []);
+
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
     const data = Object.fromEntries(new FormData(form).entries());
-
-    // Honeypot — botovi ga popune, ljudi ga ne vide.
     if (data.website) return;
+    if (!service || !logoPhotos || !siteStyle || !animations || !deadline) {
+      setErrorMessage("Popuni sva obavezna polja označena zvezdicom.");
+      setState("error");
+      return;
+    }
 
+    setErrorMessage("");
     setState("sending");
     try {
-      const res = await fetch("/api/contact", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      if (!res.ok) throw new Error(String(res.status));
+      const result = (await response.json().catch(() => null)) as
+        | { error?: string }
+        | null;
+      if (!response.ok) {
+        throw new Error(
+          result?.error || "Upit nije poslat. Proveri podatke i pokušaj ponovo."
+        );
+      }
       setState("sent");
-    } catch {
+      form.reset();
+      setService("");
+      setLogoPhotos("");
+      setSiteStyle("");
+      setAnimations("");
+      setDeadline("");
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "Upit nije poslat. Proveri podatke i pokušaj ponovo."
+      );
       setState("error");
     }
   }
@@ -63,46 +190,18 @@ export default function Contact() {
       <div className="grid gap-14 md:grid-cols-[1fr_1.15fr] md:gap-24">
         <div>
           <SectionHead
-            index="07"
-            label="Contact"
+            index=""
+            label="Kontakt"
             title={
               <>
-                Imaš projekat?
+                Želiš projekat?
                 <br />
                 Pričajmo.
               </>
             }
-            lead="Opiši šta radiš i šta ti treba. Odgovor stiže brzo — konkretan, sa sledećim korakom."
+            lead="Reci mi šta radiš i šta ti treba, ja ti rešavam sve ostalo."
             className="mb-10!"
           />
-
-          <Reveal mode="fade" className="rounded-md border border-line p-6 md:p-8">
-            <p className="label text-[10px] text-eye">Najbrži put</p>
-            <p className="mt-3 text-lg font-medium leading-snug md:text-xl">
-              Pošalji <span className="text-eye">„PROJEKAT”</span> u DM — nastavljamo
-              tamo, bez formalnosti.
-            </p>
-            <a
-              href={site.instagramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group mt-6 inline-flex items-center gap-3 rounded-full bg-fg px-6 py-3.5 text-[15px] font-medium text-bg transition-colors duration-300 hover:bg-eye"
-            >
-              <InstagramIcon size={16} />
-              {site.instagramHandle}
-              <ArrowUpRight
-                size={16}
-                className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              />
-            </a>
-          </Reveal>
-
-          <Reveal mode="fade" delay={0.1} className="mt-6 text-sm text-dim">
-            Ili direktno na{" "}
-            <a href={`mailto:${site.email}`} className="text-fg underline-offset-4 hover:underline">
-              {site.email}
-            </a>
-          </Reveal>
         </div>
 
         <Reveal mode="fade" delay={0.1}>
@@ -110,15 +209,16 @@ export default function Contact() {
             <div className="flex h-full min-h-[420px] flex-col items-start justify-center rounded-md border border-line p-8 md:p-12">
               <p className="label text-eye">Primljeno</p>
               <p className="mt-4 max-w-md text-2xl font-semibold tracking-[-0.02em] md:text-3xl">
-                Upit je stigao. Odgovaramo brzo.
+                Hvala, javljam se uskoro!
               </p>
-              <p className="mt-4 text-sm text-dim">Bez spama. Bez obaveza. Samo konkretan predlog.</p>
+              <p className="mt-4 text-sm text-dim">
+                Javiću ti se na Instagramu radi dogovora o daljoj saradnji.
+              </p>
             </div>
           ) : (
             <form onSubmit={onSubmit} className="flex flex-col gap-7">
-              <p className="label">Ili kroz formu</p>
+              <p className="label">Popuni formu</p>
 
-              {/* Honeypot polje — sakriveno od ljudi */}
               <input
                 type="text"
                 name="website"
@@ -133,7 +233,13 @@ export default function Contact() {
                   <label htmlFor="c-name" className={labelCls}>
                     Ime i prezime *
                   </label>
-                  <input id="c-name" name="name" required placeholder="Petar Petrović" className={inputCls} />
+                  <input
+                    id="c-name"
+                    name="name"
+                    required
+                    placeholder="Petar Petrović"
+                    className={inputCls}
+                  />
                 </div>
                 <div>
                   <label htmlFor="c-contact" className={labelCls}>
@@ -151,45 +257,150 @@ export default function Contact() {
 
               <div className="grid gap-7 md:grid-cols-2">
                 <div>
+                  <label htmlFor="c-brand-name" className={labelCls}>
+                    Naziv biznisa/brenda *
+                  </label>
+                  <input
+                    id="c-brand-name"
+                    name="brandName"
+                    required
+                    placeholder="Naziv vašeg biznisa"
+                    className={inputCls}
+                  />
+                </div>
+                <div>
+                  <label htmlFor="c-city" className={labelCls}>
+                    Grad/lokacija *
+                  </label>
+                  <input
+                    id="c-city"
+                    name="city"
+                    required
+                    placeholder="Beograd, Srbija"
+                    className={inputCls}
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-7 md:grid-cols-2">
+                <div>
                   <label htmlFor="c-business" className={labelCls}>
                     Čime se baviš
                   </label>
-                  <input id="c-business" name="business" placeholder="Restoran, studio, brend…" className={inputCls} />
+                  <input
+                    id="c-business"
+                    name="business"
+                    placeholder="Restoran, studio, brend..."
+                    className={inputCls}
+                  />
                 </div>
+                <ChoiceSelect
+                  id="c-service"
+                  name="service"
+                  label="Koja usluga te zanima?"
+                  value={service}
+                  options={serviceOptions}
+                  onChange={(value) => setService(value as ServiceChoice)}
+                />
+              </div>
+
+              {service === "prodavnica" && (
                 <div>
-                  <label htmlFor="c-budget" className={labelCls}>
-                    Okvirni budžet
+                  <label htmlFor="c-products" className={labelCls}>
+                    Okvirni broj proizvoda
                   </label>
-                  <select id="c-budget" name="budget" defaultValue="" className={`${inputCls} appearance-none`}>
-                    <option value="" disabled hidden>
-                      Izaberi…
-                    </option>
-                    <option value="osnovni">Osnovni projekat</option>
-                    <option value="standardni">Standardni projekat</option>
-                    <option value="premium">Premium projekat</option>
-                    <option value="po-dogovoru">Po dogovoru</option>
-                    <option value="ne-znam">Još ne znam</option>
-                  </select>
+                  <input
+                    id="c-products"
+                    name="productCount"
+                    type="number"
+                    min="1"
+                    placeholder="Na primer: 24"
+                    className={inputCls}
+                  />
                 </div>
+              )}
+
+              <div>
+                <label htmlFor="c-instagram" className={labelCls}>
+                  Vaš Instagram *
+                </label>
+                <input
+                  id="c-instagram"
+                  name="instagram"
+                  type="text"
+                  required
+                  placeholder="@precizno_ime"
+                  className={inputCls}
+                />
+              </div>
+
+              <ChoiceSelect
+                id="c-logo-photos"
+                name="logoPhotos"
+                label="Logo i fotke"
+                value={logoPhotos}
+                options={logoPhotoOptions}
+                onChange={setLogoPhotos}
+              />
+
+              <div>
+                <label htmlFor="c-references" className={labelCls}>
+                  Reference sajtovi (linkovi koji ti se sviđaju)
+                </label>
+                <input
+                  id="c-references"
+                  name="references"
+                  type="url"
+                  placeholder="npr. https://..."
+                  className={inputCls}
+                />
               </div>
 
               <div>
                 <label htmlFor="c-message" className={labelCls}>
-                  Projekat *
+                  Šta želiš na sajtu? *
                 </label>
                 <textarea
                   id="c-message"
                   name="message"
                   required
                   rows={4}
-                  placeholder="Šta radiš, šta ti treba i dokle si stigao/la…"
+                  placeholder="Opiši stranice, funkcije, stil i sve što ti je važno..."
                   className={`${inputCls} resize-none`}
                 />
               </div>
 
+              <div className="grid gap-7 md:grid-cols-2">
+                <ChoiceSelect
+                  id="c-style"
+                  name="siteStyle"
+                  label="Stil sajta"
+                  value={siteStyle}
+                  options={styleOptions}
+                  onChange={setSiteStyle}
+                />
+                <ChoiceSelect
+                  id="c-animations"
+                  name="animations"
+                  label="Želiš li animacije na sajtu?"
+                  value={animations}
+                  options={animationOptions}
+                  onChange={setAnimations}
+                />
+              </div>
+
+              <ChoiceSelect
+                id="c-deadline"
+                name="deadline"
+                label="Kada ti treba sajt?"
+                value={deadline}
+                options={deadlineOptions}
+                onChange={setDeadline}
+              />
+
               {state === "error" && (
                 <p className="text-sm text-red-400/90">
-                  Nešto je zapelo. Pokušaj ponovo — ili piši direktno u DM.
+                  {errorMessage}
                 </p>
               )}
 
@@ -198,7 +409,7 @@ export default function Contact() {
                 disabled={state === "sending"}
                 className="group mt-2 inline-flex w-fit items-center gap-2 rounded-full bg-fg px-8 py-4 text-[15px] font-medium text-bg transition-colors duration-300 hover:bg-eye disabled:opacity-60"
               >
-                {state === "sending" ? "Šaljem…" : "Pošalji upit"}
+                {state === "sending" ? "Šaljem..." : "Pošalji upit"}
                 <ArrowUpRight
                   size={16}
                   className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"

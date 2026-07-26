@@ -7,31 +7,26 @@ export const faq: FaqItem[] = [
   {
     question: "Koliko košta sajt?",
     answer:
-      "Cenu određuje obim: broj strana, animacije, sadržaj, rokovi. Posle kratkog razgovora dobijaš tačnu, fiksnu ponudu — bez skrivenih stavki i bez iznenađenja na kraju.",
-  },
-  {
-    question: "Koliko traje izrada?",
-    answer:
-      "Standardan projekat traje nekoliko nedelja od predatog materijala do lansiranja. Kompleksniji projekti traju duže, ali rok znaš unapred i on se poštuje.",
+      "Sve informacije o cenama su prikazane na sajtu. Ako vam nešto nije jasno, možete mi pisati na Instagramu.",
   },
   {
     question: "Šta treba da pripremim?",
     answer:
-      "Osnovne informacije o biznisu, logo ako postoji, i sat vremena za razgovor. Za sve ostalo — tekstove, strukturu, vizuale — imamo proces i rešenje.",
+      "Samo treba da znate šta želite.",
   },
   {
     question: "Već imam sajt. Radite li redizajn?",
     answer:
-      "Da, i to je najčešći tip projekta. Zadržavamo ono što radi, menjamo ono što te košta klijenata — a migraciju sadržaja i domena preuzimamo mi.",
+      "Radimo. Za takav tip posla cene su snižene.",
   },
   {
-    question: "Ko sređuje domen, hosting i mejl?",
+    question: "Ko vodi računa o domenu i hostingu?",
     answer:
-      "Mi. Domen, hosting, poslovni mejl i analitika se postavljaju kao deo projekta. Sajt predajemo kao gotov proizvod koji radi — sa svim pristupima kod tebe.",
+      "Mi, naravno — osim ako vi želite sami da kupite domen i plaćate hosting.",
   },
   {
     question: "Šta se dešava posle lansiranja?",
     answer:
-      "Ne nestajemo. Dogovaramo održavanje i dalje izmene po potrebi, a sajt je napravljen tako da može da raste zajedno sa poslom.",
+      "Nakon lansiranja ostajem vam na raspolaganju 24/7 za dodavanje novog sadržaja ili u slučaju nekog kvara koji se, garantujem, neće desiti.",
   },
 ];
