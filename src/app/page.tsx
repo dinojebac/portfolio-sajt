@@ -5,7 +5,6 @@ import Hero from "@/sections/Hero";
 import ServiceChooser from "@/sections/ServiceChooser";
 import Services from "@/sections/Services";
 import OfferDetails from "@/sections/OfferDetails";
-import Showcase from "@/sections/Showcase";
 import SelectedWork from "@/sections/SelectedWork";
 import About from "@/sections/About";
 import FAQ from "@/sections/FAQ";
@@ -18,7 +17,6 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <Showcase />
         <ServiceChooser />
         <Services />
         <OfferDetails />

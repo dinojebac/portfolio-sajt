@@ -7,7 +7,6 @@ import SectionHead from "@/components/SectionHead";
 type Category = "sajtovi" | "prodavnice";
 
 const websites = [
-  ["https://fast-food-lux.vercel.app/", "/images/projects/fast-food-lux.png"],
   ["https://urban-alu-team-sajt2.vercel.app/", "/images/projects/urban-alu-team.png"],
   ["https://pizzerijaihpdemo.netlify.app/", "/images/projects/pizzerija-ihp.png"],
   ["https://ledambientlightdeske.rs/", "/images/projects/led-ambient-light.png"],
