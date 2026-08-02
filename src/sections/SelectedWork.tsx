@@ -22,22 +22,34 @@ const stores = [
 ];
 
 function ProjectCard({ href, preview }: { href: string; preview: string }) {
+  const hostname = new URL(href).hostname.replace(/^www\./, "");
+
   return (
     <a
       data-case
+      data-skew
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`Otvori projekat ${new URL(href).hostname}`}
-      className="group relative block aspect-square overflow-hidden rounded-md border border-line bg-panel/30 transition-colors duration-300 hover:border-eye"
+      aria-label={`Otvori projekat ${hostname}`}
+      className="group block w-[78vw] shrink-0 snap-start sm:w-[52vw] md:w-auto"
     >
-      <img
-        src={preview}
-        alt=""
-        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-      />
-      <span className="absolute inset-0 bg-bg/0 transition-colors duration-300 group-hover:bg-bg/15" />
-      <span className="sr-only">Otvori projekat</span>
+      {/* 4:3 with the crop pinned to the top: these are desktop screenshots, so
+          a square centre-crop cut the hero out and left mid-page text sliced in
+          half — the exact opposite of proof that the work is good. */}
+      <div className="relative aspect-[4/3] overflow-hidden rounded-md border border-line bg-panel/30 transition-colors duration-300 group-hover:border-eye">
+        <img
+          src={preview}
+          alt=""
+          loading="lazy"
+          className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+        />
+        <span className="absolute inset-0 bg-bg/0 transition-colors duration-300 group-hover:bg-bg/15" />
+      </div>
+      {/* Real domains do more for credibility than another decorative caption. */}
+      <p className="label mt-3 text-[9px] transition-colors duration-300 group-hover:text-fg">
+        {hostname}
+      </p>
     </a>
   );
 }
@@ -85,19 +97,23 @@ export default function SelectedWork() {
         ))}
       </div>
 
-      <div data-work-grid className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
-        {category === "sajtovi" && (
-          websites.map(([href, preview]) => (
-            <ProjectCard key={href} href={href} preview={preview} />
-          ))
-        )}
-
-        {category === "prodavnice" && (
-          stores.map(([href, preview]) => (
-            <ProjectCard key={href} href={href} preview={preview} />
-          ))
-        )}
+      {/* Horizontal swipe on phones, grid from md up. Snap points make the rail
+          feel like a deck of cards rather than a scrollable strip, and each
+          card is wide enough that the screenshot actually reads.
+          data-lenis-prevent keeps the smooth-scroll wrapper off this axis. */}
+      <div
+        data-work-grid
+        data-lenis-prevent
+        className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-4 md:gap-6 md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden"
+      >
+        {(category === "sajtovi" ? websites : stores).map(([href, preview]) => (
+          <ProjectCard key={href} href={href} preview={preview} />
+        ))}
       </div>
+
+      <p className="label mt-5 text-[9px] md:hidden" aria-hidden="true">
+        ← Prevuci za još radova
+      </p>
     </section>
   );
 }

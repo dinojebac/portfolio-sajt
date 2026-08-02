@@ -1,4 +1,7 @@
 import SmoothScroll from "@/components/SmoothScroll";
+import ScrollFX from "@/components/ScrollFX";
+import AmbientGlow from "@/components/AmbientGlow";
+import TapRipple from "@/components/TapRipple";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Hero from "@/sections/Hero";
@@ -14,6 +17,7 @@ export default function Home() {
   return (
     <>
       <SmoothScroll />
+      <AmbientGlow />
       <Navbar />
       <main>
         <Hero />
@@ -26,6 +30,9 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
+      <TapRipple />
+      {/* Last so every [data-speed] / [data-skew] node is already committed. */}
+      <ScrollFX />
     </>
   );
 }

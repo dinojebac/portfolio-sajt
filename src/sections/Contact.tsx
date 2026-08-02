@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import SectionHead from "@/components/SectionHead";
 import Reveal from "@/components/Reveal";
+import { haptic } from "@/lib/haptic";
 import {
   SERVICE_SELECT_EVENT,
   type ServiceChoice,
@@ -149,6 +150,7 @@ export default function Contact() {
     if (!service || !logoPhotos || !siteStyle || !animations || !deadline) {
       setErrorMessage("Popuni sva obavezna polja označena zvezdicom.");
       setState("error");
+      haptic("error");
       return;
     }
 
@@ -169,6 +171,7 @@ export default function Contact() {
         );
       }
       setState("sent");
+      haptic("success");
       form.reset();
       setService("");
       setLogoPhotos("");
@@ -182,6 +185,7 @@ export default function Contact() {
           : "Upit nije poslat. Proveri podatke i pokušaj ponovo."
       );
       setState("error");
+      haptic("error");
     }
   }
 

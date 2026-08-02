@@ -4,10 +4,11 @@ import { useRef } from "react";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { scrollToTarget } from "@/lib/lenis";
 import { site } from "@/data/site";
+import ChapterProgress from "@/components/ChapterProgress";
 
 /**
- * Fixed navbar that stays hidden during the dark panther intro and slides in
- * once the hero text has appeared (~1.75 viewport heights of scroll).
+ * Fixed navbar that stays out of the way for the hero and slides in as the
+ * visitor leaves it, bringing the chapter progress strip with it.
  */
 export default function Navbar() {
   const ref = useRef<HTMLElement>(null);
@@ -27,7 +28,9 @@ export default function Navbar() {
         gsap.to(nav, { yPercent: -120, autoAlpha: 0, duration: 0.4, ease: "power2.in", overwrite: true });
 
       ScrollTrigger.create({
-        start: () => window.innerHeight * 1.75,
+        // Just past the hero — early enough that the progress strip is on
+        // screen while there is still most of the page left to earn.
+        start: () => window.innerHeight * 0.85,
         end: "max",
         onEnter: show,
         onLeaveBack: hide,
@@ -44,7 +47,7 @@ export default function Navbar() {
   return (
     <header
       ref={ref}
-      className="fixed inset-x-0 top-0 z-[60] border-b border-line bg-bg/60 backdrop-blur-xl"
+      className="fixed inset-x-0 top-0 z-[60] bg-bg/60 backdrop-blur-xl"
     >
       <nav className="flex h-16 items-center justify-between px-5 md:px-10">
         <a
@@ -76,6 +79,8 @@ export default function Navbar() {
           Kontakt
         </a>
       </nav>
+      {/* Doubles as the navbar's bottom rule — no separate border needed. */}
+      <ChapterProgress />
     </header>
   );
 }

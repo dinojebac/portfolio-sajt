@@ -2,6 +2,8 @@
 
 import { ArrowUpRight, Check } from "lucide-react";
 import Reveal from "@/components/Reveal";
+import ScrubText from "@/components/ScrubText";
+import ScrambleLabel from "@/components/ScrambleLabel";
 import Btn from "@/components/Btn";
 import { scrollToTarget } from "@/lib/lenis";
 import { selectService, type ServiceChoice } from "@/lib/serviceSelection";
@@ -27,7 +29,9 @@ function Offer({ id, label, title, children, service, cta, aside }: OfferProps) 
     <section id={id} className="border-t border-line px-5 py-24 md:px-10 md:py-36">
       <div className="grid gap-12 md:grid-cols-[1.25fr_.75fr] md:gap-20">
         <Reveal mode="fade">
-          <p className="label text-eye">{label}</p>
+          <p className="label text-eye">
+            <ScrambleLabel>{label}</ScrambleLabel>
+          </p>
           <h2 className="mt-6 max-w-3xl text-[clamp(2rem,4.8vw,4rem)] font-semibold leading-[1.03] tracking-[-0.035em]">
             {title}
           </h2>
@@ -40,7 +44,9 @@ function Offer({ id, label, title, children, service, cta, aside }: OfferProps) 
         </Reveal>
 
         <Reveal mode="fade" delay={0.12}>
-          <div className="rounded-md border border-line bg-panel/60 p-6 md:p-8">
+          {/* Drifts slower than the copy beside it — the price card reads as a
+              separate plane, which is what makes the column feel deep. */}
+          <div data-speed="0.9" className="rounded-md border border-line bg-panel/60 p-6 md:p-8">
             {aside}
           </div>
         </Reveal>
@@ -87,14 +93,14 @@ export default function OfferDetails() {
           </>
         }
       >
-        <p>
+        <ScrubText>
           Profesionalan sajt gradi poverenje pre prvog razgovora, radi 24/7 i jasno
           pokazuje zašto tvoj posao vredi.
-        </p>
-        <p>
+        </ScrubText>
+        <ScrubText>
           Za razliku od Instagram ili Facebook profila, tvoj sajt ne zavisi od
           algoritma i daje ti potpunu kontrolu nad prezentacijom brenda.
-        </p>
+        </ScrubText>
       </Offer>
 
       <Offer
@@ -122,14 +128,14 @@ export default function OfferDetails() {
           </>
         }
       >
-        <p>
+        <ScrubText>
           Dobijaš prodavnicu spremnu za naručivanje i plaćanje pouzećem, sa jasnim
           kategorijama, proizvodima i tokom kupovine.
-        </p>
-        <p>
+        </ScrubText>
+        <ScrubText>
           Online plaćanje karticom je dostupno klijentima koji imaju registrovanu
           firmu i može se povezati u okviru projekta.
-        </p>
+        </ScrubText>
       </Offer>
 
       <Offer
@@ -152,14 +158,14 @@ export default function OfferDetails() {
           </>
         }
       >
-        <p>
+        <ScrubText>
           Podešavamo meta tagove, brzinu, strukturu stranica i sadržaj tako da
           Google jasno razume šta nudiš i za koje pretrage treba da te prikaže.
-        </p>
-        <p>
+        </ScrubText>
+        <ScrubText>
           Kada je relevantno, sređujemo i Google Business profil. Sve dobijaš u
           jednom paketu — nema dodatnih podešavanja ni skrivenih doplata.
-        </p>
+        </ScrubText>
       </Offer>
     </>
   );

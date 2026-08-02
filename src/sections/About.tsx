@@ -1,5 +1,6 @@
 import SectionHead from "@/components/SectionHead";
 import Reveal from "@/components/Reveal";
+import ScrubText from "@/components/ScrubText";
 
 const steps = [
   {
@@ -24,9 +25,9 @@ export default function About() {
     <section id="studio" className="px-5 py-24 md:px-10 md:py-36">
       <SectionHead index="" title="Šta dobijaš kada sarađujemo?" />
 
-      <Reveal as="p" mode="lines" className="max-w-4xl text-[clamp(1.4rem,3.2vw,2.5rem)] font-medium leading-[1.25] tracking-[-0.02em]">
+      <ScrubText as="p" className="max-w-4xl text-[clamp(1.4rem,3.2vw,2.5rem)] font-medium leading-[1.25] tracking-[-0.02em]">
         Ne dobijaš samo lep sajt. Dobijaš alat koji ti dovodi nove mušterije i čini da tvoj posao izgleda ozbiljnije i skuplje nego ikad.
-      </Reveal>
+      </ScrubText>
       <p className="mt-6 max-w-2xl text-sm leading-relaxed text-dim md:text-base">
         Posetilac proceni sajt pre nego što pročita prvu rečenicu — i tu odluči koliko tvoja usluga sme da košta.
       </p>
