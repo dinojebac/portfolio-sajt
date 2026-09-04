@@ -1,86 +1,192 @@
 "use client";
 
-import { useRef } from "react";
-import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
-import { scrollToTarget } from "@/lib/lenis";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { ChevronDown, Menu, X } from "lucide-react";
+import { clsx } from "clsx";
 import { site } from "@/data/site";
-import ChapterProgress from "@/components/ChapterProgress";
 
 /**
- * Fixed navbar that stays out of the way for the hero and slides in as the
- * visitor leaves it, bringing the chapter progress strip with it.
+ * Navigacija u normalnom toku stranice — skroluje zajedno sa sadržajem.
+ *
+ * Ranije je bila `fixed` sa GSAP-om koji ju je uvlačio posle heroja i sa
+ * ChapterProgress trakom ispod. Obe stvari su imale smisla dok je sajt bio
+ * jedna duga stranica; sa više ruta traka je merila poglavlja kojih više
+ * nema, a fiksni meni je samo jeo visinu ekrana na svakoj podstranici.
+ *
+ * Mobilni panel nije ukras: sa nestankom trake ovo je jedini način da se sa
+ * telefona stigne bilo gde osim na početnu.
  */
 export default function Navbar() {
-  const ref = useRef<HTMLElement>(null);
+  const pathname = usePathname();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
 
-  useGSAP(
-    () => {
-      const nav = ref.current;
-      if (!nav) return;
-
-      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reduced) return; // static hero → navbar visible from the start
-
-      gsap.set(nav, { yPercent: -120, autoAlpha: 0 });
-      const show = () =>
-        gsap.to(nav, { yPercent: 0, autoAlpha: 1, duration: 0.6, ease: "power3.out", overwrite: true });
-      const hide = () =>
-        gsap.to(nav, { yPercent: -120, autoAlpha: 0, duration: 0.4, ease: "power2.in", overwrite: true });
-
-      ScrollTrigger.create({
-        // Just past the hero — early enough that the progress strip is on
-        // screen while there is still most of the page left to earn.
-        start: () => window.innerHeight * 0.85,
-        end: "max",
-        onEnter: show,
-        onLeaveBack: hide,
-      });
-    },
-    { scope: ref }
-  );
-
-  const onAnchor = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    scrollToTarget(href);
+  // Navbar živi u layout-u, pa ga navigacija ne remountuje — bez ovoga bi
+  // otvoreni panel ostao preko nove stranice. Zatvara se na klik, ne kroz
+  // efekat na pathname, da promena rute ne izaziva još jedan render prolaz.
+  const closeAll = () => {
+    setMobileOpen(false);
+    setServicesOpen(false);
   };
 
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      setMobileOpen(false);
+      setServicesOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
+
+  const servicesActive = pathname.startsWith("/usluge");
+
   return (
-    <header
-      ref={ref}
-      className="fixed inset-x-0 top-0 z-[60] bg-bg/60 backdrop-blur-xl"
-    >
+    <header className="relative z-50 border-b border-line bg-bg">
       <nav className="flex h-16 items-center justify-between px-5 md:px-10">
-        <a
-          href="#intro"
-          onClick={(e) => onAnchor(e, "#intro")}
+        <Link
+          href="/"
+          onClick={closeAll}
           className="text-lg font-bold tracking-[-0.04em]"
-          aria-label="BSB — početak"
+          aria-label="BSB — početna"
         >
           BSB<span className="text-eye">®</span>
-        </a>
+        </Link>
+
         <ul className="hidden items-center gap-8 md:flex">
-          {site.nav.map((item) => (
-            <li key={item.href}>
-              <a
-                href={item.href}
-                onClick={(e) => onAnchor(e, item.href)}
-                className="label text-[10px] transition-colors duration-300 hover:text-fg"
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
+          <li>
+            <Link
+              href="/"
+              onClick={closeAll}
+              className={clsx(
+                "label text-[10px] transition-colors duration-300 hover:text-fg",
+                isActive("/") && "text-fg"
+              )}
+            >
+              Početna
+            </Link>
+          </li>
+
+          <li className="relative">
+            <button
+              type="button"
+              aria-haspopup="true"
+              aria-expanded={servicesOpen}
+              onClick={() => setServicesOpen((open) => !open)}
+              className={clsx(
+                "label flex items-center gap-1.5 text-[10px] transition-colors duration-300 hover:text-fg",
+                servicesActive && "text-fg"
+              )}
+            >
+              Usluge
+              <ChevronDown
+                size={12}
+                className={clsx(
+                  "transition-transform duration-300",
+                  servicesOpen && "rotate-180"
+                )}
+              />
+            </button>
+            {servicesOpen && (
+              <div className="absolute left-0 top-full z-50 mt-3 w-60 overflow-hidden rounded-sm border border-line bg-bg">
+                {site.services.map((service) => (
+                  <Link
+                    key={service.href}
+                    href={service.href}
+                    onClick={closeAll}
+                    className={clsx(
+                      "block px-4 py-3 text-[15px] transition-colors duration-200 hover:bg-eye hover:text-bg",
+                      pathname === service.href ? "text-eye" : "text-fg"
+                    )}
+                  >
+                    {service.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </li>
+
+          {site.nav
+            .filter((item) => item.href !== "/" && item.href !== "/kontakt")
+            .map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  onClick={closeAll}
+                  className={clsx(
+                    "label text-[10px] transition-colors duration-300 hover:text-fg",
+                    isActive(item.href) && "text-fg"
+                  )}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
         </ul>
-        <a
-          href="#contact"
-          onClick={(e) => onAnchor(e, "#contact")}
-          className="rounded-full border border-line px-5 py-2 text-sm font-medium transition-colors duration-300 hover:border-fg/50"
-        >
-          Kontakt
-        </a>
+
+        <div className="flex items-center gap-3">
+          <Link
+            href="/kontakt"
+            onClick={closeAll}
+            className="hidden rounded-full border border-line px-5 py-2 text-sm font-medium transition-colors duration-300 hover:border-fg/50 md:inline-block"
+          >
+            Kontakt
+          </Link>
+          <button
+            type="button"
+            onClick={() => setMobileOpen((open) => !open)}
+            aria-expanded={mobileOpen}
+            aria-label={mobileOpen ? "Zatvori meni" : "Otvori meni"}
+            className="-mr-1 p-1 text-fg md:hidden"
+          >
+            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </nav>
-      {/* Doubles as the navbar's bottom rule — no separate border needed. */}
-      <ChapterProgress />
+
+      {mobileOpen && (
+        <div className="border-t border-line px-5 pb-6 pt-2 md:hidden">
+          <Link
+            href="/"
+            onClick={closeAll}
+            className="block border-b border-line py-4 text-[15px]"
+          >
+            Početna
+          </Link>
+
+          <p className="label mt-5 text-[9px] text-eye">Usluge</p>
+          {site.services.map((service) => (
+            <Link
+              key={service.href}
+              href={service.href}
+              onClick={closeAll}
+              className="block border-b border-line py-4 text-[15px]"
+            >
+              {service.label}
+            </Link>
+          ))}
+
+          <div className="mt-5">
+            {site.nav
+              .filter((item) => item.href !== "/")
+              .map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={closeAll}
+                  className="block border-b border-line py-4 text-[15px]"
+                >
+                  {item.label}
+                </Link>
+              ))}
+          </div>
+        </div>
+      )}
     </header>
   );
 }

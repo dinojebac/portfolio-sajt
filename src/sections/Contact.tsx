@@ -1,14 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ArrowUpRight } from "lucide-react";
 import SectionHead from "@/components/SectionHead";
 import Reveal from "@/components/Reveal";
 import { haptic } from "@/lib/haptic";
-import {
-  SERVICE_SELECT_EVENT,
-  type ServiceChoice,
-} from "@/lib/serviceSelection";
+import { type ServiceChoice } from "@/lib/serviceSelection";
 
 type FormState = "idle" | "sending" | "sent" | "error";
 type ChoiceOption = { value: string; label: string };
@@ -21,6 +18,7 @@ const serviceOptions: ChoiceOption[] = [
   { value: "vebsajt", label: "Vebsajt" },
   { value: "prodavnica", label: "Online prodavnica" },
   { value: "seo", label: "SEO optimizacija" },
+  { value: "ads", label: "Vođenje oglasa (Google & Meta)" },
 ];
 
 const logoPhotoOptions: ChoiceOption[] = [
@@ -122,25 +120,24 @@ function ChoiceSelect({
   );
 }
 
-export default function Contact() {
+/**
+ * `initialService` stiže sa /kontakt rute, koja čita ?usluga= iz URL-a.
+ * Dok je forma stajala ispod ponude na istoj stranici, izbor je prenosio
+ * custom event; preko navigacije on se emituje pre nego što forma uopšte
+ * postoji, pa ga nema ko čuti. URL preživljava i navigaciju i osvežavanje.
+ */
+export default function Contact({
+  initialService = "",
+}: {
+  initialService?: ServiceChoice | "";
+}) {
   const [state, setState] = useState<FormState>("idle");
   const [errorMessage, setErrorMessage] = useState("");
-  const [service, setService] = useState<ServiceChoice | "">("");
+  const [service, setService] = useState<ServiceChoice | "">(initialService);
   const [logoPhotos, setLogoPhotos] = useState("");
   const [siteStyle, setSiteStyle] = useState("");
   const [animations, setAnimations] = useState("");
   const [deadline, setDeadline] = useState("");
-
-  useEffect(() => {
-    const onService = (event: Event) => {
-      const choice = (event as CustomEvent<ServiceChoice>).detail;
-      if (serviceOptions.some((option) => option.value === choice)) {
-        setService(choice);
-      }
-    };
-    window.addEventListener(SERVICE_SELECT_EVENT, onService);
-    return () => window.removeEventListener(SERVICE_SELECT_EVENT, onService);
-  }, []);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -203,6 +200,7 @@ export default function Contact() {
               </>
             }
             lead="Reci mi šta radiš i šta ti treba, ja ti rešavam sve ostalo."
+            titleAs="h1"
             className="mb-10!"
           />
         </div>
@@ -360,15 +358,43 @@ export default function Contact() {
               </div>
 
               <div>
-                <label htmlFor="c-message" className={labelCls}>
-                  Šta želiš na sajtu? *
+                <label htmlFor="c-problem" className={labelCls}>
+                  Šta ti trenutno najviše otežava da dovedeš nove mušterije? *
                 </label>
                 <textarea
-                  id="c-message"
-                  name="message"
+                  id="c-problem"
+                  name="biggestProblem"
                   required
-                  rows={4}
-                  placeholder="Opiši stranice, funkcije, stil i sve što ti je važno..."
+                  rows={3}
+                  placeholder="Nemam sajt, imam ali ne donosi upite, gubim se u odnosu na konkurenciju na Google-u ili Instagramu..."
+                  className={`${inputCls} resize-none`}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="c-tried" className={labelCls}>
+                  Šta si do sad probao/probala da to rešiš? *
+                </label>
+                <textarea
+                  id="c-tried"
+                  name="triedSoFar"
+                  required
+                  rows={3}
+                  placeholder="Imao sam sajt koji niko ne poseti, probao sam reklame bez efekta, oslanjam se samo na priču od usta do usta..."
+                  className={`${inputCls} resize-none`}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="c-why-now" className={labelCls}>
+                  Zašto je baš sad pravi trenutak da to rešiš? *
+                </label>
+                <textarea
+                  id="c-why-now"
+                  name="whyNow"
+                  required
+                  rows={3}
+                  placeholder="Kreće sezona, širim posao, konkurencija me pretiče..."
                   className={`${inputCls} resize-none`}
                 />
               </div>

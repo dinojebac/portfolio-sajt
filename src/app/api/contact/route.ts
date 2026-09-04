@@ -15,7 +15,9 @@ type ContactPayload = {
   siteStyle?: string;
   animations?: string;
   deadline?: string;
-  message?: string;
+  biggestProblem?: string;
+  triedSoFar?: string;
+  whyNow?: string;
   website?: string;
 };
 
@@ -23,6 +25,7 @@ const serviceLabels: Record<string, string> = {
   vebsajt: "Vebsajt",
   prodavnica: "Online prodavnica",
   seo: "SEO optimizacija",
+  ads: "Vođenje oglasa (Google & Meta)",
 };
 
 const logoPhotoLabels: Record<string, string> = {
@@ -88,7 +91,9 @@ export async function POST(request: NextRequest) {
     !payload.siteStyle?.trim() ||
     !payload.animations?.trim() ||
     !payload.deadline?.trim() ||
-    !payload.message?.trim()
+    !payload.biggestProblem?.trim() ||
+    !payload.triedSoFar?.trim() ||
+    !payload.whyNow?.trim()
   ) {
     return Response.json(
       { error: "Popuni sva obavezna polja i pokušaj ponovo." },
@@ -125,7 +130,9 @@ export async function POST(request: NextRequest) {
     ["Stil sajta", siteStyle],
     ["Animacije", animations],
     ["Kada treba sajt", deadline],
-    ["Poruka", clean(payload.message)],
+    ["Najveći problem", clean(payload.biggestProblem)],
+    ["Šta je do sad probao/la", clean(payload.triedSoFar)],
+    ["Zašto baš sad", clean(payload.whyNow)],
   ];
 
   const html = `

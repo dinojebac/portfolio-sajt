@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { clsx } from "clsx";
 import { ArrowUpRight } from "lucide-react";
 
@@ -20,20 +21,15 @@ export default function Btn({
   className,
   onClick,
 }: BtnProps) {
-  return (
-    <a
-      href={href}
-      onClick={onClick}
-      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-      className={clsx(
-        "group inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-[15px] font-medium tracking-tight transition-all duration-300",
-        variant === "primary" &&
-          "bg-fg text-bg hover:bg-eye hover:text-[#060606]",
-        variant === "ghost" &&
-          "border border-line text-fg hover:border-fg/50",
-        className
-      )}
-    >
+  const cls = clsx(
+    "group inline-flex items-center justify-center gap-2 rounded-full px-6 py-3.5 text-[15px] font-medium tracking-tight transition-all duration-300",
+    variant === "primary" && "bg-fg text-bg hover:bg-eye hover:text-[#060606]",
+    variant === "ghost" && "border border-line text-fg hover:border-fg/50",
+    className
+  );
+
+  const inner = (
+    <>
       {children}
       {arrow && (
         <ArrowUpRight
@@ -41,6 +37,27 @@ export default function Btn({
           className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
         />
       )}
+    </>
+  );
+
+  // Interne rute idu kroz <Link> — običan <a> bi radio pun reload, što ubija
+  // Lenis instancu i sve ScrollTrigger-e umesto client-side navigacije.
+  if (!external && href.startsWith("/")) {
+    return (
+      <Link href={href} onClick={onClick} className={cls}>
+        {inner}
+      </Link>
+    );
+  }
+
+  return (
+    <a
+      href={href}
+      onClick={onClick}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      className={cls}
+    >
+      {inner}
     </a>
   );
 }

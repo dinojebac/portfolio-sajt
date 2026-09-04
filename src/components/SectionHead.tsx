@@ -7,9 +7,17 @@ type SectionHeadProps = {
   title: React.ReactNode;
   lead?: string;
   className?: string;
+  /** "h1" kad je ovo naslov cele rute, a ne samo sekcije unutar nje. */
+  titleAs?: "h1" | "h2";
 };
 
-export default function SectionHead({ label, title, lead, className }: SectionHeadProps) {
+export default function SectionHead({
+  label,
+  title,
+  lead,
+  className,
+  titleAs = "h2",
+}: SectionHeadProps) {
   return (
     <div className={clsx("mb-14 md:mb-20", className)}>
       {label && (
@@ -21,7 +29,7 @@ export default function SectionHead({ label, title, lead, className }: SectionHe
         </Reveal>
       )}
       <Reveal
-        as="h2"
+        as={titleAs}
         mode="lines"
         className={clsx("max-w-3xl text-[clamp(1.9rem,4.6vw,3.6rem)] font-semibold leading-[1.05] tracking-[-0.02em]", label && "mt-6")}
       >

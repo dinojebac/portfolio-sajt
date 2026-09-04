@@ -7,26 +7,26 @@ export const faq: FaqItem[] = [
   {
     question: "Koliko košta sajt?",
     answer:
-      "Sve informacije o cenama su prikazane na sajtu. Ako vam nešto nije jasno, možete mi pisati na Instagramu.",
+      "Sve informacije o cenama su prikazane na sajtu. Ako ti nešto nije jasno, pišeš mi na Instagramu.",
   },
   {
     question: "Šta treba da pripremim?",
     answer:
-      "Samo treba da znate šta želite.",
+      "Ništa posebno. Pošalji mi Instagram i par rečenica o poslu — ostalo istražim sam.",
   },
   {
     question: "Već imam sajt. Radite li redizajn?",
     answer:
-      "Radimo. Za takav tip posla cene su snižene.",
+      "Radim. Za takav tip posla cene su snižene.",
   },
   {
     question: "Ko vodi računa o domenu i hostingu?",
     answer:
-      "Mi, naravno — osim ako vi želite sami da kupite domen i plaćate hosting.",
+      "Ja, naravno — osim ako ti želiš sam da kupiš domen i plaćaš hosting.",
   },
   {
     question: "Šta se dešava posle lansiranja?",
     answer:
-      "Nakon lansiranja ostajem vam na raspolaganju 24/7 za dodavanje novog sadržaja ili u slučaju nekog kvara koji se, garantujem, neće desiti.",
+      "Ostajem ti na raspolaganju za izmene i podršku — to važi za sve klijente koji su mi ukazali poverenje.",
   },
 ];

@@ -143,15 +143,9 @@ export default function Hero() {
           <Odometer value={20} delay={1.35} />+ realizovanih projekata
         </p>
         <div data-hero-stagger className="mt-9 flex flex-wrap items-center gap-4">
-          <Btn href="#contact" variant="ghost" arrow={false}>
+          <Btn href="/kontakt" variant="ghost" arrow={false}>
             Popuni formu
           </Btn>
-        </div>
-        <div data-hero-stagger className="mt-12 flex items-center gap-3">
-          <span className="relative block h-8 w-px overflow-hidden bg-line">
-            <span className="absolute inset-x-0 top-0 block h-1/2 bg-eye [animation:scrollhint_2.2s_cubic-bezier(.4,0,.2,1)_infinite]" />
-          </span>
-          <span className="label text-[10px]">Skroluj</span>
         </div>
         <InstagramBrowserFallback />
       </div>

@@ -23,7 +23,7 @@ const steps = [
 export default function About() {
   return (
     <section id="studio" className="px-5 py-24 md:px-10 md:py-36">
-      <SectionHead index="" title="Šta dobijaš kada sarađujemo?" />
+      <SectionHead index="" title="Šta dobijaš kada sarađujemo?" titleAs="h1" />
 
       <ScrubText as="p" className="max-w-4xl text-[clamp(1.4rem,3.2vw,2.5rem)] font-medium leading-[1.25] tracking-[-0.02em]">
         Ne dobijaš samo lep sajt. Dobijaš alat koji ti dovodi nove mušterije i čini da tvoj posao izgleda ozbiljnije i skuplje nego ikad.
@@ -41,7 +41,14 @@ export default function About() {
         ))}
       </div>
 
-      <Reveal as="p" mode="fade" delay={0.2} className="label mt-16 md:mt-20">
+      <Reveal as="p" mode="fade" delay={0.15} className="mt-16 max-w-2xl text-[15px] leading-relaxed text-dim md:mt-20">
+        Osim sajta, dobijaš i razmišljanje o brendu: tekst pišem na osnovu
+        istraživanja tvog tržišta, ne generičkih fraza, animacije koje zadržavaju
+        pažnju umesto da je odvlače, a kad budeš spreman/spremna za taj korak, mogu
+        da vodim i tvoje Google i Meta oglase.
+      </Reveal>
+
+      <Reveal as="p" mode="fade" delay={0.25} className="label mt-8">
         Sve je napravljeno da tvoj brend deluje ozbiljno, jasno i vredno pažnje.
       </Reveal>
     </section>

@@ -1,6 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
+import { site } from "@/data/site";
+import SmoothScroll from "@/components/SmoothScroll";
+import ScrollFX from "@/components/ScrollFX";
+import AmbientGlow from "@/components/AmbientGlow";
+import TapRipple from "@/components/TapRipple";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 // latin-ext subset is required for full Serbian Latin coverage (Č/Ć/Š/Đ/Ž).
 const instrumentSans = Instrument_Sans({
@@ -15,9 +22,12 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  // TODO: zameniti pravim domenom kad bude registrovan.
-  metadataBase: new URL("https://bsb-studio.vercel.app"),
-  title: "BSB — Sajtovi koji izgledaju skuplje",
+  metadataBase: new URL(site.url),
+  title: {
+    default: "BSB — Sajtovi koji izgledaju skuplje",
+    // Podstranice šalju samo svoje ime; sufiks dolazi odavde.
+    template: "%s | BSB",
+  },
   description:
     "BSB je studio za premium sajtove, cinematic scroll animacije i kompletnu digitalnu prezentaciju. Za brendove koji ne žele da izgledaju prosečno.",
   openGraph: {
@@ -40,7 +50,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="sr" className={`${instrumentSans.variable} ${plexMono.variable}`}>
-      <body className="bg-bg text-fg antialiased">{children}</body>
+      <body className="bg-bg text-fg antialiased">
+        <SmoothScroll />
+        <AmbientGlow />
+        <Navbar />
+        <main>{children}</main>
+        <Footer />
+        <TapRipple />
+        {/* Last so every [data-speed] / [data-skew] node is already committed. */}
+        <ScrollFX />
+      </body>
     </html>
   );
 }

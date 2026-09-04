@@ -7,7 +7,7 @@ import { faq } from "@/data/faq";
 import SectionHead from "@/components/SectionHead";
 import Reveal from "@/components/Reveal";
 
-export default function FAQ() {
+export default function FAQ({ titleAs = "h2" }: { titleAs?: "h1" | "h2" }) {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
@@ -17,6 +17,7 @@ export default function FAQ() {
           index="06"
           title="Pitanja koja svi postave."
           lead="Ako odgovora nema ovde — forma je ispod, odgovaramo brzo."
+          titleAs={titleAs}
           className="mb-0!"
         />
 

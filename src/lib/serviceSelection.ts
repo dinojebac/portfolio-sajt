@@ -1,9 +1,33 @@
-export type ServiceChoice = "vebsajt" | "prodavnica" | "seo" | "nisam-siguran";
+export type ServiceChoice = "vebsajt" | "prodavnica" | "seo" | "ads" | "nisam-siguran";
 
-export const SERVICE_SELECT_EVENT = "bsb:select-service";
+/**
+ * Query parametar kojim uslužne stranice prenose izbor usluge na /kontakt.
+ *
+ * Ranije je ovo bio custom event — radilo je dok su ponuda i forma bile na
+ * istoj stranici. Posle prelaska na više ruta event se emituje pre nego što
+ * je forma uopšte montirana, pa nema ko da ga čuje; URL preživljava
+ * navigaciju (i osvežavanje stranice, i deljenje linka).
+ */
+export const SERVICE_QUERY_PARAM = "usluga";
 
-export function selectService(service: ServiceChoice) {
-  window.dispatchEvent(
-    new CustomEvent<ServiceChoice>(SERVICE_SELECT_EVENT, { detail: service })
-  );
+const CHOICES: readonly ServiceChoice[] = [
+  "vebsajt",
+  "prodavnica",
+  "seo",
+  "ads",
+  "nisam-siguran",
+];
+
+/** Putanja ka formi sa unapred izabranom uslugom. */
+export function contactHref(service: ServiceChoice) {
+  return `/kontakt?${SERVICE_QUERY_PARAM}=${service}`;
+}
+
+/**
+ * Prepoznaje izbor iz sirove vrednosti query parametra. Radi i na serveru, pa
+ * /kontakt može da pročita parametar pri renderu i prosledi ga formi kao
+ * početnu vrednost — bez efekta koji naknadno prepravlja state.
+ */
+export function parseService(value: unknown): ServiceChoice | "" {
+  return CHOICES.includes(value as ServiceChoice) ? (value as ServiceChoice) : "";
 }
