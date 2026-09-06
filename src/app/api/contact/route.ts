@@ -25,6 +25,7 @@ const serviceLabels: Record<string, string> = {
   analiza: "Analiza tržišta i konkurencije",
   vebsajt: "Izrada sajta",
   prodavnica: "Online prodavnica",
+  animacije: "Animacije i efekti",
   seo: "SEO optimizacija",
   ads: "Google Ads",
   instagram: "Instagram oglašavanje",

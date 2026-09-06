@@ -2,6 +2,7 @@ export type ServiceChoice =
   | "analiza"
   | "vebsajt"
   | "prodavnica"
+  | "animacije"
   | "seo"
   | "ads"
   | "instagram"
@@ -27,6 +28,7 @@ const CHOICES: readonly ServiceChoice[] = [
   "analiza",
   "vebsajt",
   "prodavnica",
+  "animacije",
   "seo",
   "ads",
   "instagram",

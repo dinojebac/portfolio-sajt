@@ -1,14 +1,7 @@
 import SectionHead from "@/components/SectionHead";
 import ServiceGrid from "@/components/ServiceGrid";
 import Btn from "@/components/Btn";
-import { services } from "@/data/services";
-
-/**
- * Naslovna prikazuje sest od sedam usluga, pa dugme vodi na hub.
- * Sedma kartica bi ostala sama u trecem redu i razbila mrezu, a puna lista
- * ionako postoji na `/usluge`.
- */
-const HOME_COUNT = 6;
+import { homeServices } from "@/data/services";
 
 export default function ServiceChooser() {
   return (
@@ -19,7 +12,7 @@ export default function ServiceChooser() {
         lead="Izaberi uslugu i vidi kako radimo."
       />
 
-      <ServiceGrid items={services.slice(0, HOME_COUNT)} />
+      <ServiceGrid items={homeServices} />
 
       <div className="mt-10">
         <Btn href="/usluge" variant="ghost">

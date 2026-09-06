@@ -20,6 +20,7 @@ const serviceOptions: ChoiceOption[] = [
   { value: "analiza", label: "Analiza tržišta i konkurencije" },
   { value: "vebsajt", label: "Izrada sajta" },
   { value: "prodavnica", label: "Online prodavnica" },
+  { value: "animacije", label: "Animacije i efekti" },
   { value: "seo", label: "SEO optimizacija" },
   { value: "ads", label: "Google Ads" },
   { value: "instagram", label: "Instagram oglašavanje" },

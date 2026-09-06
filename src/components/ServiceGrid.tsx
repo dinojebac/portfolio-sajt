@@ -7,18 +7,18 @@ import type { Service } from "@/data/services";
  * Kartice usluga. Isti komponent stoji i na naslovnoj i na `/usluge`, pa se
  * kartica ne moze razici izmedju te dve strane.
  *
- * Tri kolone, ne cetiri: spisak je narastao sa cetiri usluge na sedam, a u
- * cetiri kolone poslednji red ostaje sa jednom karticom i rupom od tri polja.
+ * Cetiri kolone: naslovna prikazuje cetiri kartice, hub osam, pa se oba
+ * spiska dele bez rupe u poslednjem redu.
  */
 export default function ServiceGrid({ items }: { items: Service[] }) {
   return (
-    <div className="grid border-b border-line md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid border-b border-line md:grid-cols-2 lg:grid-cols-4">
       {items.map((item, index) => (
         <Reveal
           key={item.href}
           mode="fade"
           delay={index * 0.06}
-          className="border-t border-line md:border-l md:odd:border-l-0 lg:border-l lg:[&:nth-child(3n+1)]:border-l-0"
+          className="border-t border-line md:border-l md:odd:border-l-0 lg:border-l lg:[&:nth-child(4n+1)]:border-l-0"
         >
           {/* Strelica gore-desno, ne nadole: kartica vodi na zasebnu rutu, a
               nadole bi obecavalo skrol do sekcije na istoj stranici. */}

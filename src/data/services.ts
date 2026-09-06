@@ -11,7 +11,8 @@ export type Service = {
  * zaboravilo.
  *
  * Redosled nije proizvoljan: analiza je prva zato sto od nje pocinje svaka
- * saradnja, a sve ispod nje su odluke koje se donose tek posle nje.
+ * saradnja, a sve ispod nje su odluke koje se donose tek posle nje. Animacije
+ * stoje odmah uz izradu sajta jer su njen dodatak, a ne zasebna usluga.
  */
 export const services: Service[] = [
   {
@@ -22,13 +23,18 @@ export const services: Service[] = [
   },
   {
     title: "Izrada sajta",
-    description: "Predstavi svoj biznis ili brend online.",
+    description: "Sajt koji te predstavlja ozbiljno pre prvog razgovora.",
     href: "/usluge/izrada-sajta",
   },
   {
     title: "Online prodavnica",
-    description: "Prodaj proizvode 24/7, sa plaćanjem pouzećem ili karticom.",
+    description: "Prodavnica spremna za naručivanje, sa plaćanjem i dostavom.",
     href: "/usluge/online-prodavnica",
+  },
+  {
+    title: "Animacije i efekti",
+    description: "Premium dodatak uz izradu sajta. Otvori demo i vidi razliku.",
+    href: "/usluge/animacije-i-efekti",
   },
   {
     title: "SEO optimizacija",
@@ -37,7 +43,7 @@ export const services: Service[] = [
   },
   {
     title: "Google Ads",
-    description: "Dovedi kupce sa Google pretrage i društvenih mreža.",
+    description: "Kad ti treba posao odmah, a ne za dva meseca.",
     href: "/usluge/google-ads",
   },
   {
@@ -52,3 +58,22 @@ export const services: Service[] = [
     href: "/usluge/zakazivanje-termina",
   },
 ];
+
+/**
+ * Cetiri kartice koje stoje na naslovnoj. Nisu prve cetiri iz spiska: ovo je
+ * izbor koji pokriva ceo luk saradnje (od analize, preko sajta i vidljivosti,
+ * do alata koji radi posle), pa posetilac iz njih vidi domet, a ne pocetak
+ * abecede. Ostalo je iza dugmeta `Sve usluge`.
+ */
+const HOME_HREFS = [
+  "/usluge/analiza-trzista",
+  "/usluge/izrada-sajta",
+  "/usluge/seo-optimizacija",
+  "/usluge/zakazivanje-termina",
+];
+
+export const homeServices: Service[] = HOME_HREFS.map((href) => {
+  const match = services.find((service) => service.href === href);
+  if (!match) throw new Error(`Nepoznata usluga na naslovnoj: ${href}`);
+  return match;
+});

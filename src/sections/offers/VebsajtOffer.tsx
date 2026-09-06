@@ -2,6 +2,7 @@
 
 import { Check } from "lucide-react";
 import Offer from "@/components/Offer";
+import Btn from "@/components/Btn";
 import ScrubText from "@/components/ScrubText";
 
 export default function VebsajtOffer() {
@@ -54,15 +55,21 @@ export default function VebsajtOffer() {
             )}
           </ul>
 
+          {/* Stoji ispod obe cene, ne uz jednu: dodatak ide na oba paketa.
+              Ranije je ovde bila samo tvrdnja da animacije zadrzavaju posetioce;
+              sad umesto tvrdnje vodi na cetiri ziva sajta koja to pokazuju. */}
           <div className="mt-8 border-t border-line pt-6">
-            <p className="label text-eye">Dodatak: 3D animacije</p>
-            <p className="mt-3 text-sm leading-relaxed text-dim">
-              3D animacije privlače pažnju, zadržavaju posetioce i čine da se tvoj
-              sajt pamti duže od konkurencije. Dostupno uz bilo koji paket.
-            </p>
+            <p className="label text-eye">Dodatak: 3D animacije i napredni efekti</p>
             <p className="mt-3 text-sm text-fg">
-              Doplata: <span className="font-semibold text-eye">+150€</span>.
+              <span className="font-semibold text-eye">+150€</span>
             </p>
+            <p className="mt-3 text-sm leading-relaxed text-dim">
+              Ide uz oba paketa. Otvori četiri žive demonstracije i vidi razliku pre
+              nego što odlučiš.
+            </p>
+            <Btn href="/usluge/animacije-i-efekti" variant="ghost" className="mt-5">
+              Pogledaj primere
+            </Btn>
           </div>
         </>
       }
