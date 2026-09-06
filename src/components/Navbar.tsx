@@ -85,7 +85,10 @@ export default function Navbar() {
             onClick={() => setMobileOpen((open) => !open)}
             aria-expanded={mobileOpen}
             aria-label={mobileOpen ? "Zatvori meni" : "Otvori meni"}
-            className="-mr-1 p-1 text-fg md:hidden"
+            // p-3 drzi dodirnu zonu na ~44px (Apple/Google minimum) a da se
+            // ikonica vizuelno ne pomeri — negativna margina je poravnava
+            // nazad na isto mesto gde je bila sa p-1.
+            className="-mr-3 p-3 text-fg md:hidden"
           >
             {mobileOpen ? <X size={22} /> : <Menu size={22} />}
           </button>

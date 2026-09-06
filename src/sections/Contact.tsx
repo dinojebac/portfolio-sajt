@@ -10,8 +10,11 @@ import { type ServiceChoice } from "@/lib/serviceSelection";
 type FormState = "idle" | "sending" | "sent" | "error";
 type ChoiceOption = { value: string; label: string };
 
+// text-base (16px) na mobilnom: iOS Safari uveca stranicu kad fokusiras input
+// cija je velicina fonta manja od 16px, sto na formi ove duzine deluje kao kvar.
+// Od md navise se vraca na 15px kako je i bilo.
 const inputCls =
-  "w-full border-b border-line bg-transparent py-3 text-[15px] text-fg outline-none transition-colors duration-300 placeholder:text-dim/50 focus:border-fg/60";
+  "w-full border-b border-line bg-transparent py-3 text-base text-fg outline-none transition-colors duration-300 placeholder:text-dim/50 focus:border-fg/60 md:text-[15px]";
 const labelCls = "label mb-1.5 block text-[10px]";
 
 // Redosled i nazivi prate `data/services.ts` i hub `/usluge`. Vrednosti ne:
