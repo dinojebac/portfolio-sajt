@@ -9,7 +9,24 @@ export type Project = {
   displayDomain?: string;
 };
 
+/**
+ * Redosled je ručno određen, ne hronološki — prve tri kartice su jedine koje
+ * posetilac vidi bez prevlačenja, pa tu stoje radovi koje vlasnik želi prve.
+ */
 export const websites: Project[] = [
+  {
+    href: "https://ledambientlightdeske.rs/",
+    preview: "/images/projects/led-ambient-light.png",
+  },
+  {
+    href: "https://ordulja.com/",
+    preview: "/images/projects/ordulja.png",
+  },
+  {
+    href: "https://kneletattoo222.vercel.app/",
+    preview: "/images/projects/knele-tattoo.png",
+    displayDomain: "knele-tattoo.rs",
+  },
   {
     href: "https://urban-alu-team-sajt2.vercel.app/",
     preview: "/images/projects/urban-alu-team.png",
@@ -21,14 +38,6 @@ export const websites: Project[] = [
     displayDomain: "pizzerijaihp.rs",
   },
   {
-    href: "https://ledambientlightdeske.rs/",
-    preview: "/images/projects/led-ambient-light.png",
-  },
-  {
-    href: "https://ordulja.com/",
-    preview: "/images/projects/ordulja.png",
-  },
-  {
     href: "https://dejanatrepaviceborca.com/",
     preview: "/images/projects/dejana-trepavice.png",
   },
@@ -36,11 +45,6 @@ export const websites: Project[] = [
     href: "https://markovicwash.netlify.app/",
     preview: "/images/projects/markovic-wash.png",
     displayDomain: "markovicwash.rs",
-  },
-  {
-    href: "https://kneletattoo222.vercel.app/",
-    preview: "/images/projects/knele-tattoo.png",
-    displayDomain: "knele-tattoo.rs",
   },
 ];
 
