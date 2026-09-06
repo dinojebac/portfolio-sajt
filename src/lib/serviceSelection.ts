@@ -1,6 +1,6 @@
 export type ServiceChoice =
   | "analiza"
-  | "vebsajt"
+  | "izrada-sajta"
   | "prodavnica"
   | "animacije"
   | "seo"
@@ -18,15 +18,16 @@ export type ServiceChoice =
  * navigaciju (i osvežavanje stranice, i deljenje linka).
  *
  * Vrednosti su namerno ostale iste i kad su se rute i nazivi usluga promenili
- * (`vebsajt` je sada „Izrada sajta”, `ads` je „Google Ads”). Ovo su ključevi
- * koji žive u linkovima koje su ljudi već dobili, pa im promena ne bi donela
- * ništa osim pokvarenog izbora u formi.
+ * (`ads` je sada „Google Ads”). Izuzetak je `vebsajt`, preimenovan u
+ * `izrada-sajta` zajedno sa stranicom, jer stari CTA linkovi vode na istu tu
+ * stranicu koja se u ovom koraku menja u celini — nema stare veze koju bi
+ * zadržavanje stare vrednosti štitilo.
  */
 export const SERVICE_QUERY_PARAM = "usluga";
 
 const CHOICES: readonly ServiceChoice[] = [
   "analiza",
-  "vebsajt",
+  "izrada-sajta",
   "prodavnica",
   "animacije",
   "seo",

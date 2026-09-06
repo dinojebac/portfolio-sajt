@@ -5,7 +5,7 @@ import JsonLd from "@/components/service/JsonLd";
 import { zakazivanjeFaq } from "@/data/zakazivanjeFaq";
 
 export const metadata: Metadata = {
-  title: "Zakazivanje termina",
+  title: "Aplikacija za zakazivanje termina",
   description:
     "Aplikacija u kojoj klijent sam vidi slobodne termine i zakaže se za deset sekundi. Instalira se sa tvog sajta, 4.000 dinara mesečno.",
 };

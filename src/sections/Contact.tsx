@@ -18,13 +18,13 @@ const labelCls = "label mb-1.5 block text-[10px]";
 // one su ključevi iz `serviceSelection` koji žive u već podeljenim linkovima.
 const serviceOptions: ChoiceOption[] = [
   { value: "analiza", label: "Analiza tržišta i konkurencije" },
-  { value: "vebsajt", label: "Izrada sajta" },
+  { value: "izrada-sajta", label: "Izrada sajta" },
   { value: "prodavnica", label: "Online prodavnica" },
   { value: "animacije", label: "Animacije i efekti" },
   { value: "seo", label: "SEO optimizacija" },
   { value: "ads", label: "Google Ads" },
   { value: "instagram", label: "Instagram oglašavanje" },
-  { value: "zakazivanje", label: "Zakazivanje termina" },
+  { value: "zakazivanje", label: "Aplikacija za zakazivanje termina" },
 ];
 
 const logoPhotoOptions: ChoiceOption[] = [

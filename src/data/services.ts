@@ -52,7 +52,7 @@ export const services: Service[] = [
     href: "/usluge/instagram-oglasavanje",
   },
   {
-    title: "Zakazivanje termina",
+    title: "Aplikacija za zakazivanje termina",
     description:
       "Aplikacija u kojoj klijenti sami zakazuju termin, bez poziva i bez tvog vremena.",
     href: "/usluge/zakazivanje-termina",

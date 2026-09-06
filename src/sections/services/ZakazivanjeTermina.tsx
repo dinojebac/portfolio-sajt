@@ -73,7 +73,7 @@ export default function ZakazivanjeTermina() {
       <section className="px-5 pb-24 pt-20 md:px-10 md:pb-32 md:pt-28">
         <Reveal mode="fade">
           <p className="t-eyebrow text-accent">
-            <ScrambleLabel>Zakazivanje termina</ScrambleLabel>
+            <ScrambleLabel>Aplikacija za zakazivanje termina</ScrambleLabel>
           </p>
         </Reveal>
         <Reveal as="h1" mode="lines" className="t-display mt-8 max-w-[19ch] text-ink">
