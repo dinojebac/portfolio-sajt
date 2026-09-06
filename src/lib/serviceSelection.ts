@@ -1,4 +1,12 @@
-export type ServiceChoice = "vebsajt" | "prodavnica" | "seo" | "ads" | "nisam-siguran";
+export type ServiceChoice =
+  | "analiza"
+  | "vebsajt"
+  | "prodavnica"
+  | "seo"
+  | "ads"
+  | "instagram"
+  | "zakazivanje"
+  | "nisam-siguran";
 
 /**
  * Query parametar kojim uslužne stranice prenose izbor usluge na /kontakt.
@@ -7,14 +15,22 @@ export type ServiceChoice = "vebsajt" | "prodavnica" | "seo" | "ads" | "nisam-si
  * istoj stranici. Posle prelaska na više ruta event se emituje pre nego što
  * je forma uopšte montirana, pa nema ko da ga čuje; URL preživljava
  * navigaciju (i osvežavanje stranice, i deljenje linka).
+ *
+ * Vrednosti su namerno ostale iste i kad su se rute i nazivi usluga promenili
+ * (`vebsajt` je sada „Izrada sajta”, `ads` je „Google Ads”). Ovo su ključevi
+ * koji žive u linkovima koje su ljudi već dobili, pa im promena ne bi donela
+ * ništa osim pokvarenog izbora u formi.
  */
 export const SERVICE_QUERY_PARAM = "usluga";
 
 const CHOICES: readonly ServiceChoice[] = [
+  "analiza",
   "vebsajt",
   "prodavnica",
   "seo",
   "ads",
+  "instagram",
+  "zakazivanje",
   "nisam-siguran",
 ];
 

@@ -8,6 +8,21 @@
   --color-line: rgba(239, 238, 232, 0.1);
   /* Pale green of the panther's eyes — the only accent on the site, used sparingly. */
   --color-eye: #c2cdab;
+
+  /* Tokeni za stranice usluga (/usluge/seo-optimizacija, /usluge/analiza-trzista).
+     Stoje uporedo sa gornjima, ne umesto njih: postojece stranice i dalje voze
+     na bg/panel/fg/dim/eye, pa ih ovo ne dira. Tri nivoa povrsine postoje da bi
+     sekcije mogle da alterniraju; to je ono sto razbija monotoniju, ne boja. */
+  --color-base: #0b0b0c;
+  --color-elevated: #131315;
+  --color-card: #1a1a1d;
+  --color-subtle: rgba(255, 255, 255, 0.08);
+  --color-accent: #c4ce9b;
+  --color-accent-line: rgba(196, 206, 155, 0.35);
+  --color-accent-wash: rgba(196, 206, 155, 0.1);
+  --color-ink: #efede7;
+  --color-ink-soft: #9c9890;
+  --color-ink-muted: #6b6862;
 }
 
 @theme inline {
@@ -17,6 +32,16 @@
   --color-dim: var(--color-dim);
   --color-line: var(--color-line);
   --color-eye: var(--color-eye);
+  --color-base: var(--color-base);
+  --color-elevated: var(--color-elevated);
+  --color-card: var(--color-card);
+  --color-subtle: var(--color-subtle);
+  --color-accent: var(--color-accent);
+  --color-accent-line: var(--color-accent-line);
+  --color-accent-wash: var(--color-accent-wash);
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-ink-muted: var(--color-ink-muted);
   --font-sans: var(--font-instrument-sans);
   --font-mono: var(--font-plex-mono);
 }
@@ -119,4 +144,49 @@ body::after {
 .hairline {
   height: 1px;
   background: linear-gradient(90deg, transparent, var(--color-line) 18%, var(--color-line) 82%, transparent);
+}
+
+/* Tipografska skala za stranice usluga. Postoji kao zaseban set jer je razmak
+   izmedju nivoa namerno veci nego na ostatku sajta: tamo su H1 i body bili
+   preblizu, pa se hijerarhija gubila. Postojeci .label ostaje netaknut, ovaj
+   eyebrow je drugi (12px / 0.18em umesto 11px / 0.28em). */
+@layer components {
+  .t-display {
+    font-size: clamp(2.75rem, 7vw, 5.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+  }
+
+  .t-h2 {
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+  }
+
+  .t-h3 {
+    font-size: 1.375rem;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    font-weight: 500;
+  }
+
+  .t-lead {
+    font-size: clamp(1.125rem, 1.8vw, 1.5rem);
+    line-height: 1.45;
+  }
+
+  .t-body {
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+
+  .t-eyebrow {
+    font-family: var(--font-plex-mono), monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+  }
 }

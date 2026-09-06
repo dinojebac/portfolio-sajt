@@ -22,10 +22,13 @@ type ContactPayload = {
 };
 
 const serviceLabels: Record<string, string> = {
-  vebsajt: "Vebsajt",
+  analiza: "Analiza tržišta i konkurencije",
+  vebsajt: "Izrada sajta",
   prodavnica: "Online prodavnica",
   seo: "SEO optimizacija",
-  ads: "Vođenje oglasa (Google & Meta)",
+  ads: "Google Ads",
+  instagram: "Instagram oglašavanje",
+  zakazivanje: "Zakazivanje termina",
 };
 
 const logoPhotoLabels: Record<string, string> = {

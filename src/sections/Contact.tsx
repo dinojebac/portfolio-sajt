@@ -14,11 +14,16 @@ const inputCls =
   "w-full border-b border-line bg-transparent py-3 text-[15px] text-fg outline-none transition-colors duration-300 placeholder:text-dim/50 focus:border-fg/60";
 const labelCls = "label mb-1.5 block text-[10px]";
 
+// Redosled i nazivi prate `data/services.ts` i hub `/usluge`. Vrednosti ne:
+// one su ključevi iz `serviceSelection` koji žive u već podeljenim linkovima.
 const serviceOptions: ChoiceOption[] = [
-  { value: "vebsajt", label: "Vebsajt" },
+  { value: "analiza", label: "Analiza tržišta i konkurencije" },
+  { value: "vebsajt", label: "Izrada sajta" },
   { value: "prodavnica", label: "Online prodavnica" },
   { value: "seo", label: "SEO optimizacija" },
-  { value: "ads", label: "Vođenje oglasa (Google & Meta)" },
+  { value: "ads", label: "Google Ads" },
+  { value: "instagram", label: "Instagram oglašavanje" },
+  { value: "zakazivanje", label: "Zakazivanje termina" },
 ];
 
 const logoPhotoOptions: ChoiceOption[] = [

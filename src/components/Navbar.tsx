@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { clsx } from "clsx";
 import { site } from "@/data/site";
 
@@ -15,27 +15,24 @@ import { site } from "@/data/site";
  * jedna duga stranica; sa više ruta traka je merila poglavlja kojih više
  * nema, a fiksni meni je samo jeo visinu ekrana na svakoj podstranici.
  *
+ * `Usluge` je bila dropdown dok ih je bilo četiri. Sa sedam usluga spisak
+ * ispod menija postaje duži od ekrana na telefonu, pa je stavka sada običan
+ * link na `/usluge`, gde pun spisak ima mesta i opis uz svaku uslugu.
+ *
  * Mobilni panel nije ukras: sa nestankom trake ovo je jedini način da se sa
  * telefona stigne bilo gde osim na početnu.
  */
 export default function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
 
   // Navbar živi u layout-u, pa ga navigacija ne remountuje — bez ovoga bi
-  // otvoreni panel ostao preko nove stranice. Zatvara se na klik, ne kroz
-  // efekat na pathname, da promena rute ne izaziva još jedan render prolaz.
-  const closeAll = () => {
-    setMobileOpen(false);
-    setServicesOpen(false);
-  };
+  // otvoreni panel ostao preko nove stranice.
+  const closeAll = () => setMobileOpen(false);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key !== "Escape") return;
-      setMobileOpen(false);
-      setServicesOpen(false);
+      if (e.key === "Escape") setMobileOpen(false);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -44,8 +41,6 @@ export default function Navbar() {
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
-  const servicesActive = pathname.startsWith("/usluge");
-
   return (
     <header className="relative z-50 border-b border-line bg-bg">
       <nav className="flex h-16 items-center justify-between px-5 md:px-10">
@@ -53,66 +48,14 @@ export default function Navbar() {
           href="/"
           onClick={closeAll}
           className="text-lg font-bold tracking-[-0.04em]"
-          aria-label="BSB — početna"
+          aria-label="BSB, početna"
         >
           BSB<span className="text-eye">®</span>
         </Link>
 
         <ul className="hidden items-center gap-8 md:flex">
-          <li>
-            <Link
-              href="/"
-              onClick={closeAll}
-              className={clsx(
-                "label text-[10px] transition-colors duration-300 hover:text-fg",
-                isActive("/") && "text-fg"
-              )}
-            >
-              Početna
-            </Link>
-          </li>
-
-          <li className="relative">
-            <button
-              type="button"
-              aria-haspopup="true"
-              aria-expanded={servicesOpen}
-              onClick={() => setServicesOpen((open) => !open)}
-              className={clsx(
-                "label flex items-center gap-1.5 text-[10px] transition-colors duration-300 hover:text-fg",
-                servicesActive && "text-fg"
-              )}
-            >
-              Usluge
-              <ChevronDown
-                size={12}
-                className={clsx(
-                  "transition-transform duration-300",
-                  servicesOpen && "rotate-180"
-                )}
-              />
-            </button>
-            {servicesOpen && (
-              <div className="absolute left-0 top-full z-50 mt-3 w-60 overflow-hidden rounded-sm border border-line bg-bg">
-                {site.services.map((service) => (
-                  <Link
-                    key={service.href}
-                    href={service.href}
-                    onClick={closeAll}
-                    className={clsx(
-                      "block px-4 py-3 text-[15px] transition-colors duration-200 hover:bg-eye hover:text-bg",
-                      pathname === service.href ? "text-eye" : "text-fg"
-                    )}
-                  >
-                    {service.label}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </li>
-
           {site.nav
-            .filter((item) => item.href !== "/" && item.href !== "/kontakt")
+            .filter((item) => item.href !== "/kontakt")
             .map((item) => (
               <li key={item.href}>
                 <Link
@@ -151,40 +94,16 @@ export default function Navbar() {
 
       {mobileOpen && (
         <div className="border-t border-line px-5 pb-6 pt-2 md:hidden">
-          <Link
-            href="/"
-            onClick={closeAll}
-            className="block border-b border-line py-4 text-[15px]"
-          >
-            Početna
-          </Link>
-
-          <p className="label mt-5 text-[9px] text-eye">Usluge</p>
-          {site.services.map((service) => (
+          {site.nav.map((item) => (
             <Link
-              key={service.href}
-              href={service.href}
+              key={item.href}
+              href={item.href}
               onClick={closeAll}
               className="block border-b border-line py-4 text-[15px]"
             >
-              {service.label}
+              {item.label}
             </Link>
           ))}
-
-          <div className="mt-5">
-            {site.nav
-              .filter((item) => item.href !== "/")
-              .map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={closeAll}
-                  className="block border-b border-line py-4 text-[15px]"
-                >
-                  {item.label}
-                </Link>
-              ))}
-          </div>
         </div>
       )}
     </header>
